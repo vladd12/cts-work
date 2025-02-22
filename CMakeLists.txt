@@ -25,16 +25,13 @@ set(CMAKE_BUILD_TYPE Release)
 # Getting third party libraries
 include(get_glfw)           # Getting GLFW library
 include(get_glew)           # Getting GLEW library
-include(get_conan)          # Getting CMake conan
 include(get_nlohmann_json)  # Getting nlohmann_json library
-
-# Find required packages
-find_package(OpenGL REQUIRED)
-#find_package(GLEW REQUIRED)
-#find_package(OpenCV REQUIRED)
+include(get_conan)          # Getting CMake conan
+include(get_opencv)         # Getting OpenCV library (from conan-center)
 
 # Build dependencies
 add_subdirectory(deps)
+
 # Build main executable target (application)
 add_subdirectory(app)
 

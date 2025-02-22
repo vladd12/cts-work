@@ -1,3 +1,9 @@
+# Find required packages
+find_package(OpenCV REQUIRED)
+if(NOT OpenCV_FOUND)
+    message(FATAL_ERROR "OpenCV not found!")
+endif()
+
 # Main executable
 add_executable(EdgeResponseAnalyzer
     main.cpp
@@ -7,7 +13,7 @@ add_executable(EdgeResponseAnalyzer
 
 # Link libraries
 target_link_libraries(EdgeResponseAnalyzer
-#    ${OpenCV_LIBS}
+    opencv::opencv
     glew::glew
     imgui
     tinyfiledialogs
@@ -15,10 +21,7 @@ target_link_libraries(EdgeResponseAnalyzer
 )
 
 # Additional includes for the executable (PRIVATE as they are already PUBLIC for imgui and found packages)
-target_include_directories(EdgeResponseAnalyzer PRIVATE
-#    ${OpenCV_INCLUDE_DIRS}
-    ${CMAKE_CURRENT_SOURCE_DIR}
-)
+target_include_directories(EdgeResponseAnalyzer PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Output directory
 set_target_properties(EdgeResponseAnalyzer PROPERTIES
