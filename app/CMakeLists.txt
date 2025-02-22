@@ -7,9 +7,8 @@ add_executable(EdgeResponseAnalyzer
 
 # Link libraries
 target_link_libraries(EdgeResponseAnalyzer
-    ${OPENGL_LIBRARIES}
-    ${GLEW_LIBRARIES}
 #    ${OpenCV_LIBS}
+    glew::glew
     imgui
     tinyfiledialogs
     nlohmann_json::nlohmann_json
@@ -17,15 +16,8 @@ target_link_libraries(EdgeResponseAnalyzer
 
 # Additional includes for the executable (PRIVATE as they are already PUBLIC for imgui and found packages)
 target_include_directories(EdgeResponseAnalyzer PRIVATE
-#    ${IMGUI_DIR}
-#    ${IMGUI_DIR}/backends
-    ${OPENGL_INCLUDE_DIRS}
-    ${GLEW_INCLUDE_DIRS}
-#    ${glfw3_INCLUDE_DIRS}
-    ${OpenCV_INCLUDE_DIRS}
-#    ${TINYFILEDIALOGS_DIR}
-#    ${nlohmann_json_INCLUDE_DIRS}
-    ${CMAKE_SOURCE_DIR}
+#    ${OpenCV_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # Output directory
