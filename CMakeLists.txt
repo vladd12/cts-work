@@ -16,11 +16,14 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set(CMAKE_BUILD_TYPE Release)
 
 # Getting third party libraries
-include(get_glfw)  # Getting GLFW library
-include(get_conan) # Getting CMake conan
+include(get_glfw)          # Getting GLFW library
+include(get_conan)         # Getting CMake conan
+include(get_nlohmann_json) # Getting nlohmann_json library
 
 # Build dependencies
 add_subdirectory(deps)
+# Build main executable target (application)
+add_subdirectory(app)
 
 # Find required packages
 find_package(OpenGL REQUIRED)
@@ -45,35 +48,6 @@ find_package(OpenGL REQUIRED)
 #    message(FATAL_ERROR "nlohmann_json not found!")
 #endif()
 
-# Main executable
-add_executable(EdgeResponseAnalyzer
-    main.cpp
-    functions.cpp
-    functions.h
-)
-
-# Link libraries
-target_link_libraries(EdgeResponseAnalyzer
-    ${OPENGL_LIBRARIES}
-    ${GLEW_LIBRARIES}
-    glfw # Use glfw3 target name from find_package
-    ${OpenCV_LIBS}
-    imgui
-)
-
-# Additional includes for the executable (PRIVATE as they are already PUBLIC for imgui and found packages)
-target_include_directories(EdgeResponseAnalyzer PRIVATE
-    ${IMGUI_DIR}
-    ${IMGUI_DIR}/backends
-    ${OPENGL_INCLUDE_DIRS}
-    ${GLEW_INCLUDE_DIRS}
-    ${glfw3_INCLUDE_DIRS}
-    ${OpenCV_INCLUDE_DIRS}
-    ${TINYFILEDIALOGS_DIR}
-    ${nlohmann_json_INCLUDE_DIRS}
-    ${CMAKE_SOURCE_DIR}
-)
-
 # Copy shaders
 file(COPY
     ${CMAKE_SOURCE_DIR}/VertexShader.glsl
@@ -84,28 +58,4 @@ file(COPY
     ${CMAKE_SOURCE_DIR}/VertexShader.glsl
     ${CMAKE_SOURCE_DIR}/FragmentShader.glsl
     DESTINATION ${CMAKE_BINARY_DIR}
-)
-
-# Output directory
-set_target_properties(EdgeResponseAnalyzer PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-    RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release
-)
-
-# Setup build warnings
-if(MSVC) # Keep MSVC specific warnings for potential future Windows build, remove if strictly Linux only
-    target_compile_options(EdgeResponseAnalyzer PRIVATE /W4)
-else()
-    target_compile_options(EdgeResponseAnalyzer PRIVATE -Wall -Wextra)
-endif()
-
-# Create directories
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/bin/Release)
-
-# Installation
-install(TARGETS EdgeResponseAnalyzer
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
 )
