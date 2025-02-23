@@ -25,8 +25,8 @@ target_include_directories(EdgeResponseAnalyzer PRIVATE ${CMAKE_CURRENT_SOURCE_D
 
 # Output directory
 set_target_properties(EdgeResponseAnalyzer PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CUURENT_BINARY_DIR}/bin
-    RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CUURENT_BINARY_DIR}/bin/Release
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_BINARY_DIR}/bin/Release
 )
 
 # Setup build warnings
@@ -37,8 +37,15 @@ else()
 endif()
 
 # Create directories
-file(MAKE_DIRECTORY ${CMAKE_CUURENT_BINARY_DIR}/bin)
-file(MAKE_DIRECTORY ${CMAKE_CUURENT_BINARY_DIR}/bin/Release)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin/Release)
+
+# Copy shaders
+file(COPY
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/VertexShader.glsl
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/FragmentShader.glsl
+    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/bin/Release
+)
 
 # Installation
 install(TARGETS EdgeResponseAnalyzer

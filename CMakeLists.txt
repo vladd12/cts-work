@@ -34,15 +34,3 @@ add_subdirectory(deps)
 
 # Build main executable target (application)
 add_subdirectory(app)
-
-# Copy shaders
-file(COPY
-    ${CMAKE_SOURCE_DIR}/VertexShader.glsl
-    ${CMAKE_SOURCE_DIR}/FragmentShader.glsl
-    DESTINATION ${CMAKE_BINARY_DIR}/bin/Release
-)
-file(COPY
-    ${CMAKE_SOURCE_DIR}/VertexShader.glsl
-    ${CMAKE_SOURCE_DIR}/FragmentShader.glsl
-    DESTINATION ${CMAKE_BINARY_DIR}
-)
