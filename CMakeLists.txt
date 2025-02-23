@@ -20,8 +20,6 @@ if(NOT CMAKE_BUILD_TYPE)
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
-set(CMAKE_BUILD_TYPE Release)
-
 # Getting third party libraries
 include(get_glfw)           # Getting GLFW library
 include(get_glew)           # Getting GLEW library
